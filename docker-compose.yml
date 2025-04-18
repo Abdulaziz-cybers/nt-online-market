@@ -48,7 +48,7 @@ services:
             - market_network
     node:
         image: node:22
-        container_name: chat_node
+        container_name: market_node
         working_dir: /var/www
         volumes:
             - ./:/var/www
