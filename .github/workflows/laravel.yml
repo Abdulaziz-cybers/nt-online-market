@@ -21,6 +21,9 @@ jobs:
             # Navigate to your Laravel project
             cd /var/www/OnlineMarket
 
+            # Ensure correct permissions on docker-compose file (if necessary)
+            sudo chmod 644 docker-compose.yml
+
             # Stop existing containers
             sudo docker-compose down
 
@@ -32,7 +35,7 @@ jobs:
             sudo docker-compose up -d --build
 
             # Give containers time to start
-            sleep 5
+            sleep 10
 
             # Run Laravel artisan commands
             sudo docker exec market_app php artisan migrate --force
