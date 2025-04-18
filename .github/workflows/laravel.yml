@@ -40,5 +40,4 @@ jobs:
             sudo docker exec market_app php artisan route:cache
             sudo docker exec market_app php artisan view:cache
             sudo docker exec market_app php artisan optimize
-
             echo "✅ Deployment completed successfully!"
