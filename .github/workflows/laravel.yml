@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            cd /var/www/OnlineMarket
+            cd /var/www/nt-online-market
             sudo docker compose down
             sudo git reset --hard
             sudo git pull
@@ -25,6 +25,3 @@ jobs:
             sudo docker exec market_app php artisan migrate
             sudo docker exec market_app php artisan optimize
             echo "Deploy Completed!"
-
-
-
