@@ -2,45 +2,29 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   deploy:
-    name: Deploy to AWS EC2
+    name: Deploy to AWS (EC2)
     runs-on: ubuntu-latest
     steps:
-      - name: Execute SSH commands on EC2 instance
+      - name: executing remote ssh commands using private key
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            echo "🔄 Starting deployment..."
-
-            # Navigate to your Laravel project
             cd /var/www/OnlineMarket
-
-            # Ensure correct permissions on docker-compose file (if necessary)
-            sudo chmod 644 docker-compose.yml
-
-            # Stop existing containers
-            sudo docker-compose down
-
-            # Pull latest code
+            sudo docker compose down
             sudo git reset --hard
-            sudo git pull origin main
-
-            # Rebuild and start containers
-            sudo docker-compose up -d --build
-
-            # Give containers time to start
-            sleep 10
-
-            # Run Laravel artisan commands
-            sudo docker exec market_app php artisan migrate --force
-            sudo docker exec market_app php artisan config:cache
-            sudo docker exec market_app php artisan route:cache
-            sudo docker exec market_app php artisan view:cache
+            sudo git pull
+            sudo docker compose up -d --build
+            sleep 2
+            sudo docker exec market_app php artisan migrate
             sudo docker exec market_app php artisan optimize
-            echo "✅ Deployment completed successfully!"
+            echo "Deploy Completed!"
+
+
+
